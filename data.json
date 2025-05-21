@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Hritik",
+    "email": "hritik@gmail.com",
+    "score": 5,
+    "timestamp": 1747812032420,
+    "rank": 1,
+    "result": "Pass"
+  },
+  {
+    "name": "Sara",
+    "email": "sara@11gmail.com",
+    "score": 3,
+    "timestamp": 1747812491790,
+    "rank": 2,
+    "result": "Pass"
+  },
+  {
+    "name": "Shivangi",
+    "email": "shivi@gmail.com",
+    "score": 2,
+    "timestamp": 1747812068554,
+    "rank": 3,
+    "result": "Fail"
+  }
+]
