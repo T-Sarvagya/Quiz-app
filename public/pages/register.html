@@ -28,7 +28,14 @@
             <small class="error-msg" id="regPasswordError"></small>
         </div>
 
-        <button type="submit" class="submit-btn">Register</button>
+        <button type="submit" id="submit-btn" class="submit-btn">
+            <span id="btnText">Register</span>
+            <span id="btnSpinner" class="button-spinner" style="display: none; "></span>
+        </button>
+
+        <div id="loader" style="display: none; text-align: center; margin-top: 15px;">
+            <div class="spinner"></div>
+        </div>
     </form>
 
     <p style="text-align:center; margin-top: 15px;">

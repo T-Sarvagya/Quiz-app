@@ -1,3 +1,7 @@
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+}
+
 /* Result Pages */
 .result-card {
   background: #f9f9f9;
@@ -87,4 +91,15 @@
 
 .submit-btn.red:hover{
     background-color:#bf0000 ;
+}
+
+/*pass fail style*/
+.pass{
+    color: green;
+    font-weight: bold;
+}
+
+.fail{
+    color: red;
+    font-weight: bold;
 }

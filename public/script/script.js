@@ -11,9 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
 
     const answers = {
-      q1: document.querySelector('input[name="q1"]:checked'),
-      q2: document.querySelector('input[name="q2"]:checked'),
-      q3: document.querySelector('input[name="q3"]:checked')
+      ques1: document.querySelector('input[name="ques1"]:checked'),
+      ques2: document.querySelector('input[name="ques2"]:checked'),
+      ques3: document.querySelector('input[name="ques3"]:checked')
     };
 
     const errorDiv = document.getElementById("error");
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
     // Capture selected checkbox values (q4)
-    const selectedQ4 = [...document.querySelectorAll('input[name="q4"]:checked')].map(cb => cb.value);
+    const selectedQ4 = [...document.querySelectorAll('input[name="ques4"]:checked')].map(cb => cb.value);
 
     if (selectedQ4.length === 0) {
       errorDiv.textContent = "All questions are mandatory.";
@@ -65,11 +65,11 @@ document.addEventListener("DOMContentLoaded", () => {
       name: user.name,
       email: user.email,
       answers: {
-        q1: answers.q1.value,
-        q2: answers.q2.value,
-        q3: answers.q3.value,
-        q4: selectedQ4,
-        q5: dropData
+        ques1: answers.ques1.value,
+        ques2: answers.ques2.value,
+        ques3: answers.ques3.value,
+        ques4: selectedQ4,
+        ques5: dropData
       }
     };
 

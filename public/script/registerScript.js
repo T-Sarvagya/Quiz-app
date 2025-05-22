@@ -5,11 +5,45 @@
       const emailEl = document.getElementById("regEmail");
       const passEl = document.getElementById("regPassword");
       const passwordRegex = /^(?=.*[A-Za-z])(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-
       const name = nameEl.value.trim();
       const email = emailEl.value.trim();
       const password = passEl.value;
       let valid = true;
+
+      const loader = document.getElementById("loader");
+      const submitBtn = document.querySelector("button[type='submit']");
+
+      submitBtn.disabled = true;
+      btnText.textContent = "Please wait...";
+      btnSpinner.style.display = "inline- block";
+      loader.style.display = "block";
+
+
+      try {
+        const res = await fetch("/register", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({name, email, password})
+        });
+
+        //const data = await res.json();
+
+        if (res.ok) {
+          const user = await res.json();
+          localStorage.setItem("quizUser", JSON.stringify(user));
+          window.location.href = "/questions";
+        } else {
+          const data = await res.json();
+          alert(data.message || "Something went wrong.");
+        }
+      } catch (err) {
+        alert("Network error. Please try again.");
+      } finally {
+        loader.style.display = "none";
+        submitBtn.disabled = false;
+        btnText.textContent = "Register";
+        btnSpinner.style.display = "none";
+      }
 
       [nameEl, emailEl, passEl].forEach(el => el.classList.remove("error-border"));
       ["regNameError", "regEmailError", "regPasswordError"].forEach(id => {
