@@ -27,6 +27,7 @@ app.use('/', pageRoutes);
 app.use('/', authRoutes);
 app.use('/', quizRoutes);
 
+
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });

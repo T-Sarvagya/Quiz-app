@@ -1,0 +1,172 @@
+[
+  {
+    "id": 1,
+    "type": "single",
+    "question": "What does HTML stands for?",
+    "options": ["Hyper Text Markup Language", "Home Tool Markup Language", "Hyperlinks and Text Markup Language"],
+    "answer": "Hyper Text Markup Language"
+  },
+  {
+    "id": 2,
+    "type": "single",
+    "question": "Node.js is designed to handle which type of operations efficiently?",
+    "options": ["Synchronous", "Asynchronous", "Parallel"],
+    "answer": "Asynchronous"
+  },
+  {
+    "id": 3,
+    "type": "single",
+    "question": "Which feature of React allows it to efficiently update the UI?",
+    "options": ["Real DOM", "Shadow DOM", "Virtual DOM"],
+    "answer": "Virtual DOM"
+  },
+  {
+    "id": 4,
+    "type": "single",
+    "question": "What does MySQL primarily function as?",
+    "options": ["A web server", "A programming language", "A database management system"],
+    "answer": "A database management system"
+  },
+  {
+    "id": 5,
+    "type": "single",
+    "question": "What type of database is MongoDB?",
+    "options": ["Document-oriented", "Relational", "Graph"],
+    "answer": "Document-oriented"
+  },
+  {
+    "id": 6,
+    "type": "single",
+    "question": "Which keyword is used for declaring a variable in JavaScript that can be reassigned?",
+    "options": ["let", "const", "static"],
+    "answer": "let"
+  },
+  {
+    "id": 7,
+    "type": "single",
+    "question": "What is the primary purpose of CSS in web development?",
+    "options": ["To create web pages", "To store data", "To style web pages"],
+    "answer": "To style web pages"
+  },
+  {
+    "id": 8,
+    "type": "multiple",
+    "question": "Which of the following are programming languages?",
+    "options": ["Python", "HTML", "CSS", "Java"],
+    "answer": ["Python","Java"]
+  },
+  {
+    "id": 9,
+    "type": "multiple",
+    "question": "Which methods are used for handling HTTP requests in Express.js?",
+    "options": ["GET", "POST", "CONNECT", "PUT"],
+    "answer": ["GET","POST","PUT"]
+  },
+  {
+    "id": 10,
+    "type": "multiple",
+    "question": "Which JavaScript data types are primitive?",
+    "options": ["Number", "Object", "String", "Array"],
+    "answer": ["Number","String"]
+  },
+  {
+    "id": 11,
+    "type": "multiple",
+    "question": "Which Node.js frameworks are commonly used for building APIs?",
+    "options": ["Django", "Flask", "Nest js", "Express js"],
+    "answer": ["Nest js","Express js"]
+  },
+  {
+    "id": 12,
+    "type": "multiple",
+    "question": "Which HTTP status codes indicate client errors?",
+    "options": ["400", "500", "404", "505"],
+    "answer": ["400","404"]
+  },
+  {
+    "id": 13,
+    "type": "drag",
+    "question": " Match technologies to their category",
+    "dragOptions": ["HTML", "Node.js", "CSS", "MongoDB"],
+    "categories" : ["Frontend","Backend","Database"],
+    "answer": {
+      "Frontend": ["HTML","CSS"],
+      "Backend": ["Node.js"],
+      "Database": ["MongoDB"]
+    }
+  },
+  {
+    "id": 14,
+    "type": "drag",
+    "question": "Match data types with examples",
+    "dragOptions": ["42", "\"Hello\"", "[1,2,3]", "{key: 'value'}"],
+    "categories": ["Number", "String", "Array", "Object"],
+    "answer": {
+      "Number": ["42"],
+      "String": ["\"Hello\""],
+      "Array": ["[1,2,3]"],
+      "Object": ["{key: 'value'}"]
+    }
+  },
+  {
+    "id": 15,
+    "type": "single",
+    "question": "What is the default value of an integer array in Java?",
+    "options": ["null", "0", "garbage value"],
+    "answer": "0"
+  },
+  {
+    "id": 16,
+    "type": "drag",
+    "question": "Match programming languages to their primary use",
+    "dragOptions": ["Python", "HTML", "JavaScript", "SQL"],
+    "categories": ["Frontend", "Backend", "Database"],
+    "answer": {
+      "Frontend": ["HTML", "JavaScript"],
+      "Backend": ["Python"],
+      "Database": ["SQL"]
+    }
+  },
+  {
+    "id": 17,
+    "type": "drag",
+    "question": "Match sorting algorithms with their complexity class",
+    "dragOptions": ["Bubble Sort", "Merge Sort", "Quick Sort", "Insertion Sort"],
+    "categories": ["O(n^2)", "O(n log n)"],
+    "answer": {
+      "O(n^2)": ["Bubble Sort", "Insertion Sort"],
+      "O(n log n)": ["Merge Sort", "Quick Sort"]
+    }
+  },
+  {
+    "id": 18,
+    "type": "drag",
+    "question": "Match file types to their format",
+    "dragOptions": ["JPEG", "MP4", "TXT", "PDF"],
+    "categories": ["Image", "Video", "Text", "Document"],
+    "answer": {
+      "Image": ["JPEG"],
+      "Video": ["MP4"],
+      "Text": ["TXT"],
+      "Document": ["PDF"]
+    }
+  },
+  {
+    "id": 19,
+    "type": "drag",
+    "question": "Classify the frameworks/libraries",
+    "dragOptions": ["React", "Express", "Angular", "Django"],
+    "categories": ["Frontend", "Backend"],
+    "answer": {
+      "Frontend": ["React", "Angular"],
+      "Backend": ["Express", "Django"]
+    }
+  },
+  {
+    "id": 20,
+    "type": "single",
+    "question": "What is the default value of an integer array in Java?",
+    "options": ["null", "0", "garbage value"],
+    "answer": "0"
+  }
+]

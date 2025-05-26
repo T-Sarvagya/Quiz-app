@@ -149,7 +149,7 @@
    }
  }
 
- .drag-options {
+ /*.drag-options {
    display: flex;
    flex-wrap: wrap;
    gap: 10px;
@@ -184,7 +184,7 @@
  .drop-box.highlight {
    border-color: #007bff;
    background-color: #f0f8ff;
- }
+ }*/
 
  .required{
     color: red;
@@ -241,5 +241,28 @@
     transform: rotate(360deg);
   }
 }
+.drag-options, .dropzones {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
 
+.draggable {
+  background: #f0f0f0;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  cursor: grab;
+  margin: 5px;
+}
+
+.dropzone {
+  border: 2px dashed #aaa;
+  padding: 10px;
+  min-width: 150px;
+  min-height: 60px;
+  border-radius: 6px;
+  background: #fcfcfc;
+}
 

@@ -11,73 +11,21 @@
   <h1 class="title">Tech Quiz Registration</h1>
   <form id="quizForm">
     <section class="form-section">
-      <!--<h2>Basic Information</h2>
-      <div class="form-group">
-        <label for="name">Full Name</label>
-        <input type="text" id="name" placeholder="Enter your full name" required />
-      </div>
-      <div class="form-group">
-        <label for="email">Email Address</label>
-        <input type="email" id="email" placeholder="example@domain.com" required />
-      </div>
-    </section>-->
-
-    <section class="form-section">
+    <section class="form-section" id="questionsContainer">
       <h2>Technical Questions</h2>
 
-      <div class="question-block">
-        <p>1. What does HTML stand for? <span class="required">*</span></p>
-        <label><input type="radio" name="ques1" value="a" /> Hyper Text Markup Language</label>
-        <label><input type="radio" name="ques1" value="b" /> Home Tool Markup Language</label>
-        <label><input type="radio" name="ques1" value="c" /> Hyperlinks and Text Markup Language</label>
-      </div>
-
-      <div class="question-block">
-        <p>2. Which language is used for styling web pages?<span class="required">*</span></p>
-        <label><input type="radio" name="ques2" value="a" /> HTML</label>
-        <label><input type="radio" name="ques2" value="b" /> CSS</label>
-        <label><input type="radio" name="ques2" value="c" /> JavaScript</label>
-      </div>
-
-      <div class="question-block">
-        <p>3. Inside which HTML element do we put the JavaScript?<span class="required">*</span></p>
-        <label><input type="radio" name="ques3" value="a" /> &lt;js&gt;</label>
-        <label><input type="radio" name="ques3" value="b" /> &lt;scripting&gt;</label>
-        <label><input type="radio" name="ques3" value="c" /> &lt;script&gt;</label>
-      </div>
-
-      <div class="question-block">
-        <p>4. Which of the following are JavaScript frameworks?<span class="required">*</span></p>
-        <label><input type="checkbox" name="ques4" value="React" /> React</label>
-        <label><input type="checkbox" name="ques4" value="Django" /> Django</label>
-        <label><input type="checkbox" name="ques4" value="Angular" /> Angular</label>
-        <label><input type="checkbox" name="ques4" value="Vue" /> Vue</label>
-      </div>
-
-      <div class="question-block" id="drag-drop-question">
-        <p>5. Match the technologies to their categories:<span class="required">*</span></p>
-
-        <div class="drag-options">
-          <div class="draggable" draggable="true" id="React">React</div>
-          <div class="draggable" draggable="true" id="HTML">HTML</div>
-          <div class="draggable" draggable="true" id="CSS">CSS</div>
-          <div class="draggable" draggable="true" id="Bootstrap">Bootstrap</div>
-        </div>
-
-        <div class="drop-zones">
-          <div class="drop-box" data-category="Framework">Framework</div>
-          <div class="drop-box" data-category="Markup">Markup</div>
-          <div class="drop-box" data-category="Style">Style</div>
-        </div>
-      </div>
     </section>
 
     <div id="error"></div>
-    <button type="submit" class="submit-btn ">Submit Quiz</button>
+    <button type="submit" class="submit-btn" id="submitBtn">
+      <span id="btnText">Submit Quiz</span>
+      <span id="btnSpinner" class="button-spinner" style="display: none;"></span>
+    </button>
   </form>
 
 </div>
 
 <script src="../script/script.js"></script>
+<script></script>
 </body>
 </html>

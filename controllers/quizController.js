@@ -1,114 +1,107 @@
 /*const { readUsers, writeUsers } = require('../utils/fileUtils');
 const RESULTS_FILE = 'data.json';*/
+const fs = require('fs');
+const path = require('path');
 const Result = require('../models/Result');
 const HttpStatus = require('../utils/httpStatus');
 
-const correctAnswers = {
-  ques1: 'a',
-  ques2: 'b',
-  ques3: 'c',
-  ques4: ['React', 'Angular', 'Vue'],
-  ques5: {
-    Framework: ['React', 'Bootstrap'],
-    Markup: ['HTML'],
-    Style: ['CSS']
-  }
-};
-
-// Helper to check single‐choice questions
-function isRadioCorrect(submitted, correct) {
-  return submitted === correct;
-}
-
-// Helper to check multiple‐choice questions
-function isCheckboxCorrect(submitted, correctList) {
-  if (!Array.isArray(submitted)) return false;
-  const sortedSubmitted = [...submitted].sort().join(',');
-  const sortedCorrect   = [...correctList].sort().join(',');
-  return sortedSubmitted === sortedCorrect;
-}
-
-// Helper to check drag‐and‐drop matching questions
-function isDragCorrect(submitted, correctMap) {
-  if (typeof submitted !== 'object') return false;
-  return Object.entries(correctMap).every(([category, correctItems]) => {
-    const userItems    = (submitted[category] || []).sort().join(',');
-    const sortedCorrect = [...correctItems].sort().join(',');
-    return userItems === sortedCorrect;
-  });
-}
-
-// Main score calculator
 function calculateScore(answers) {
+  const questionsPath = path.join(__dirname, "../questions.json");
+  const allQuestions = JSON.parse(fs.readFileSync(questionsPath, "utf-8"));
+
   let score = 0;
 
-  for (const [que, correct] of Object.entries(correctAnswers)) {
-    const submitted = answers[que];
-    let isCorrect;
+  allQuestions.forEach((question, index) => {
+    //const qId = `q${index +1}`;
+    const qId = String(question.id);
+    const submitted = answers[qId];
+    //console.log(submitted);
 
-    if (Array.isArray(correct)) {
-      // multi‐answer checkbox
-      isCorrect = isCheckboxCorrect(submitted, correct);
+    if (!submitted) return;
 
-    } else if (typeof correct === 'object') {
-      // drag‐and‐drop matching
-      isCorrect = isDragCorrect(submitted, correct);
+    if (question.type === "single") {
+      if (submitted === question.answer) score++;
 
-    } else {
-      // single‐choice radio
-      isCorrect = isRadioCorrect(submitted, correct);
+    } else if (question.type === "multiple") {
+      if (Array.isArray(submitted)) {
+        const correct = question.answer.sort().join(",");
+        const userAns = submitted.sort().join(",");
+        if (correct === userAns) score++;
+      }
+
+    } else if (question.type === "drag") {
+      if (typeof submitted === "object") {
+        let valid = true;
+        for (let cat of question.categories) {
+          const userValues = (submitted[cat] || []).sort().join(",");
+          const expected = (question.answer[cat] || []).sort().join(",");
+          if (userValues !== expected) {
+            valid = false;
+            break;
+          }
+        }
+        if (valid) score++;
+      }
     }
-
-    if (isCorrect) score++;
-  }
+  });
 
   return score;
 }
 
 
+
+
 exports.submitQuiz = async (req, res) => {
-  const { name, email, answers } = req.body;
-  if (!name || !email || !answers) {
-    return res.status(HttpStatus.BAD_REQUEST).json({ message: "Missing data" });
-  }
+   const { name, email, answers } = req.body;
 
-  const score = calculateScore(answers);
-  const timestamp = Date.now();
-  const result = score >= 3 ? "Pass" : "Fail";
+   if (!name || !email || !answers) {
+       return res.status(400).json({ message: "Missing data" });
+   }
 
-  try {
-    //Upsert result (update if exists, insert if not)
-    const updatedResult = await Result.findOneAndUpdate(
-      { email },
-      { name, email, score, result, timestamp },
-      { upsert: true, new: true }
-    );
+   try {
+       const score = calculateScore(answers);
+       const total = 5;
+       const passed = score >= 3;
+       const resultsPath = path.join(__dirname, "../data/results.json");
 
-    //Recalculate rank
-    const allResults = await Result.find().sort({ score: -1, timestamp: 1 });
-    allResults.forEach((r, i) => (r.rank = i + 1));
+       let results = fs.existsSync(resultsPath)
+         ? JSON.parse(fs.readFileSync(resultsPath, "utf-8"))
+         : [];
 
-    const currentRank = allResults.find(r => r.email === email)?.rank;
+       const index = results.findIndex(r => r.email === email);
+       if (index !== -1) results[index] = { name, email, score };
+       else results.push({ name, email, score });
 
-    //Save updated rank
-    await Result.updateOne({ email }, { rank: currentRank });
+       results.sort((a, b) => b.score - a.score);
+       const rank = results.findIndex(r => r.email === email) + 1;
 
-    res.json({
-      name,
-      email,
-      score,
-      result,
-      rank: currentRank,
-      timestamp
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({ message: "Error saving result" });
-  }
+       fs.writeFileSync(resultsPath, JSON.stringify(results, null, 2));
+
+       res.status(200).json({ score, rank, passed });
+   } catch (err) {
+       console.error("Submit Error:", err);
+       res.status(500).json({ message: "Submission failed" });
+   }
 };
 
 exports.getAllResults = async (req, res) => {
-  const filter = req.query.filter || "all";
+
+    const resultsPath = path.join(__dirname, "../data/results.json");
+
+  if (!fs.existsSync(resultsPath)) {
+    return res.json([]);
+  }
+
+  const results = JSON.parse(fs.readFileSync(resultsPath, "utf-8"));
+
+  results.sort((a, b) => b.score - a.score);
+  results.forEach((r, i) => {
+    r.rank = i + 1;
+    r.passed = r.score >= 3;
+  });
+
+  res.json(results);
+  /*const filter = req.query.filter || "all";
   const now = Date.now();
 
   const timeLimits = {
@@ -120,39 +113,6 @@ exports.getAllResults = async (req, res) => {
   const results = await Result.find({ timestamp: { $gte: timeLimits[filter] || 0 } }).sort({ score: -1, timestamp: 1 });
 
   results.forEach((r, i) => (r.rank = i + 1));
-  res.json(results);
+  res.json(results);*/
 };
 
-/*exports.submitQuiz = (req, res) => {
-  const { name, email, answers } = req.body;
-  if (!name || !email || !answers || Object.keys(answers).length !== 5) {
-    return res.status(400).json({ message: 'Incomplete submission' });
-  }
-
-  const score = calculateScore(answers);
-  const timestamp = Date.now();
-  const data = readUsers(RESULTS_FILE);
-  const existing = data.findIndex(d => d.email === email);
-
-  if (existing !== -1) data[existing] = { name, email, score, timestamp };
-  else data.push({ name, email, score, timestamp });
-
-  data.sort((a, b) => b.score - a.score || a.timestamp - b.timestamp);
-  data.forEach((d, i) => {
-    d.rank = i + 1;
-    d.result = d.score >= 3 ? 'Pass' : 'Fail';
-  });
-
-  writeUsers(RESULTS_FILE, data);
-  res.json(data.find(d => d.email === email));
-};
-
-exports.getAllResults = (req, res) => {
-  const data = readUsers(RESULTS_FILE);
-  data.sort((a, b) => b.score - a.score || a.timestamp - b.timestamp);
-  data.forEach((d, i) => {
-    d.rank = i + 1;
-    d.result = d.score >= 3 ? 'Pass' : 'Fail';
-  });
-  res.json(data);
-};*/

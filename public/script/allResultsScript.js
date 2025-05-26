@@ -33,7 +33,7 @@
               <td>${user.name}</td>
               <td>${user.email}</td>
               <td>${user.score}</td>
-              <td class="${user.result === 'Pass'? 'pass' : 'fail'}">${user.result}</td>
+              <td class="${user.passed ? 'pass':'fail'}">${user.passed? 'Pass': 'Fail'}</td>
             </tr>`;
         });
 
